@@ -1,0 +1,238 @@
+.address-billing-page {
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+  }
+  
+  .address-billing-page h1 {
+    font-size: 1.6rem;
+    color: #03623f;
+    margin-bottom: 4px;
+  }
+  
+  .subtitle {
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  /* Section Styles */
+  section {
+    margin-bottom: 32px;
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  .section-header h2 {
+    font-size: 1.2rem;
+    color: #03623f;
+  }
+  
+  .add-btn {
+    background-color: #2AB674;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .add-btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* SHIPPING ADDRESSES */
+  .addresses-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+  
+  .address-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+  }
+  .address-card:hover {
+    transform: scale(1.01);
+  }
+  
+  .address-card.default {
+    border-color: #2AB674;
+  }
+  
+  .address-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .address-header h3 {
+    font-size: 1rem;
+    color: #03623f;
+  }
+  
+  .address-actions button {
+    border: none;
+    background: none;
+    color: #555;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  .address-actions button:hover {
+    text-decoration: underline;
+  }
+  
+  .default-toggle {
+    margin-top: 8px;
+  }
+  
+  .default-label {
+    color: #2AB674;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .set-default-btn {
+    background: #eee;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .set-default-btn:hover {
+    background: #ddd;
+  }
+  
+  /* BILLING DETAILS */
+  .methods-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  
+  .method-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+  }
+  .method-card:hover {
+    transform: scale(1.01);
+  }
+  
+  .default-method {
+    border-color: #2AB674;
+  }
+  
+  .method-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .method-icon {
+    font-size: 1.2rem;
+    color: #03623f;
+  }
+  
+  .paypal-logo {
+    width: 50px;
+    object-fit: contain;
+  }
+  
+  .method-type {
+    font-size: 1rem;
+    color: #03623f;
+    margin-bottom: 4px;
+  }
+  
+  .method-detail {
+    font-size: 0.85rem;
+    color: #555;
+  }
+  
+  .method-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .default-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #2AB674;
+    font-size: 0.8rem;
+  }
+  
+  .remove-method-btn {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  
+  .remove-method-btn:hover {
+    text-decoration: underline;
+  }
+  
+  /* BILLING HISTORY */
+  .billing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    min-width: 600px;
+  }
+  
+  .billing-table th,
+  .billing-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.9rem;
+  }
+  
+  .billing-table th {
+    background-color: #f3f3f3;
+    font-weight: 600;
+    color: #444;
+  }
+  
+  .view-invoice-link {
+    color: #2AB674;
+    text-decoration: none;
+  }
+  .view-invoice-link:hover {
+    text-decoration: underline;
+  }
+  

@@ -1,0 +1,215 @@
+.payments-page {
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+  }
+  
+  .payments-page h1 {
+    font-size: 1.6rem;
+    color: #03623f;
+    margin-bottom: 16px;
+  }
+  
+  /* Card Container */
+  .card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .card h2 {
+    font-size: 1.2rem;
+    color: #03623f;
+    margin-bottom: 12px;
+  }
+  
+  /* Gateway Items */
+  .gateway-item {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background-color: #fafafa;
+  }
+  
+  .gateway-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .gateway-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .gateway-name {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .config-btn {
+    background-color: #eee;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    color: #555;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .config-btn:hover {
+    background-color: #ddd;
+  }
+  
+  .gateway-config {
+    margin-top: 8px;
+  }
+  
+  .gateway-config p {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  .gateway-config input {
+    display: block;
+    margin-bottom: 8px;
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 0.85rem;
+  }
+  
+  /* Switch Toggle */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: #2AB674;
+  }
+  input:checked + .slider:before {
+    transform: translateX(18px);
+  }
+  
+  /* Methods Row */
+  .methods-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .methods-row label {
+    font-size: 0.85rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  /* Currency & Fees */
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #03623f;
+  }
+  
+  .form-group select {
+    width: 200px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.85rem;
+  }
+  
+  .fee-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .fee-options label {
+    font-size: 0.85rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  /* Buttons */
+  .button-row {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .save-btn {
+    background-color: #2AB674;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  
+  .cancel-btn {
+    background-color: #999;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  
+  .save-btn:hover,
+  .cancel-btn:hover {
+    opacity: 0.9;
+  }
+  

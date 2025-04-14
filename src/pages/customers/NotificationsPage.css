@@ -1,0 +1,101 @@
+.notifications-page {
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .notifications-page h1 {
+    font-size: 1.6rem;
+    color: #03623f;
+    margin-bottom: 8px;
+  }
+  
+  .subtitle {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  
+  .prefs-section {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .prefs-section h2 {
+    font-size: 1.2rem;
+    color: #03623f;
+    margin-bottom: 16px;
+  }
+  
+  .preference-item {
+    margin-bottom: 12px;
+  }
+  
+  .preference-item label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .preference-item label svg {
+    font-size: 1rem;
+    color: #2AB674;
+  }
+  
+  .preference-item small {
+    display: block;
+    margin-left: 26px; /* indent under the checkbox */
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 4px;
+  }
+  
+  /* Unsubscribe / Subscribe Buttons */
+  .unsubscribe-actions {
+    margin-bottom: 24px;
+  }
+  
+  .unsubscribe-all-btn,
+  .subscribe-all-btn {
+    background-color: #f44336; /* Red for unsubscribe */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  
+  .subscribe-all-btn {
+    background-color: #2AB674; /* Green to resubscribe */
+  }
+  
+  /* Form Actions (Save / Cancel) */
+  .form-actions {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+  }
+  
+  .save-btn {
+    background-color: #03623f;
+  }
+  
+  .cancel-btn {
+    background-color: #999;
+  }
+  

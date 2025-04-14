@@ -1,0 +1,132 @@
+/* layout.css */
+
+/* Reset default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Fixed TopBar */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px; /* Adjust as needed */
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it stays on top */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  /* Body below TopBar */
+  .body {
+    display: flex;
+    flex: 1;
+    margin-top: 60px; /* Same height as TopBar */
+    height: calc(100vh - 60px); /* Adjust for TopBar */
+  }
+  
+  /* Sidebar Styling */
+  .sidebar {
+    background-color: #ffffff;
+    color: #333333;
+    min-width: 60px; /* Collapsed width */
+    max-width: 350px; /* Maximum expanded width */
+    width: 300px; /* Allow width to adjust based on content */
+    transition: width 0.3s ease;
+    overflow-y: auto;
+    padding: 15px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #e0e0e0;
+    position: relative; /* For toggle button positioning */
+  }
+  
+  /* Collapsed Sidebar */
+  .sidebar.collapsed {
+    width: 60px; /* Collapsed width */
+  }
+  
+  /* Content Area */
+  .content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+  }
+  
+  /* Toggle Button for Sidebar */
+  .toggle-button {
+    position: absolute;
+    top: 10px;
+    right: -15px; /* Adjust based on sidebar width */
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    border: 1px solid #ddd;
+    transition: right 0.3s ease;
+  }
+  
+  /* Adjust toggle button when sidebar is collapsed */
+  .sidebar.collapsed .toggle-button {
+    right: -15px;
+  }
+  
+  /* Responsive Adjustments (Optional) */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 200px;
+    }
+  
+    .sidebar.collapsed {
+      width: 50px;
+    }
+  }
+  
+
+  /* Custom Green Scrollbar for Content Area */
+.content::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+.content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 30px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background-color: #FFF;
+    background-image: -webkit-gradient(
+        linear,
+        40% 0%,
+        75% 84%,
+        from(#4D9C41),
+        to(#19911D),
+        color-stop(0.6, #54DE5D)
+    );
+}
+
+/* Optional: For Firefox */
+.content {
+    scrollbar-width: thin;
+    scrollbar-color: #54DE5D #F5F5F5;
+}
