@@ -17,7 +17,7 @@ function AllCustomersPage() {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axios.get('https://thriftstorebackend-8xii.onrender.com/api/customers');
+        const response = await axios.get('https://thrifstorebackend.onrender.com/api/customers');
         setCustomers(response.data);
       } catch (error) {
         console.error('Error fetching customers:', error);

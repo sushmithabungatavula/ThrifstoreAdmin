@@ -6,7 +6,7 @@ import { FaSearch, FaBoxOpen, FaExchangeAlt, FaArrowDown, FaArrowUp } from 'reac
 import { BiNotepad } from 'react-icons/bi';
 import { LoginContext } from '../../context/loginContext';
 
-const API_BASE_URL = 'https://thriftstorebackend-8xii.onrender.com/api';
+const API_BASE_URL = 'https://thrifstorebackend.onrender.com/api';
 
 export default function TransactionsTab() {
   const { login, vendorId } = useContext(LoginContext); 

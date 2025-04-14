@@ -3,7 +3,7 @@ import { LoginContext } from '../../context/loginContext';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const API_BASE_URL = 'https://thriftstorebackend-8xii.onrender.com';
+const API_BASE_URL = 'https://thrifstorebackend.onrender.com';
 
 const InventoryMonitoringTab = () => {
   const { vendorId } = useContext(LoginContext);

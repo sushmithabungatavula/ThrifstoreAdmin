@@ -44,7 +44,7 @@ const CategoryList = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
+          `https://thrifstorebackend.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
         );
         console.log('Fetched flat categories:', response.data);
         const tree = buildCategoryTree(response.data);
@@ -94,12 +94,12 @@ const CategoryList = () => {
       };
 
       await axios.post(
-        'https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/category',
+        'https://thrifstorebackend.onrender.com/api/vendor-categories/category',
         body
       );
       // Re-fetch and rebuild the category tree so the UI reflects the change
       const updatedResponse = await axios.get(
-        `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
+        `https://thrifstorebackend.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
       );
       setCategories(buildCategoryTree(updatedResponse.data));
       setShowAddForm(false);
@@ -121,12 +121,12 @@ const CategoryList = () => {
     try {
       for (const catId of selectedCategoryIds) {
         await axios.patch(
-          `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/category/${catId}/rename`,
+          `https://thrifstorebackend.onrender.com/api/vendor-categories/category/${catId}/rename`,
           { name: newName.trim() }
         );
       }
       const response = await axios.get(
-        `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
+        `https://thrifstorebackend.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
       );
       setCategories(buildCategoryTree(response.data));
       setSelectedCategoryIds([]);
@@ -169,7 +169,7 @@ const CategoryList = () => {
     );
     try {
       await axios.put(
-        `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/category/${catId}`,
+        `https://thrifstorebackend.onrender.com/api/vendor-categories/category/${catId}`,
         {
           vendor_id: vendorId,
           name: newName,
@@ -179,7 +179,7 @@ const CategoryList = () => {
         }
       );
       const updatedResp = await axios.get(
-        `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
+        `https://thrifstorebackend.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
       );
       setCategories(buildCategoryTree(updatedResp.data));
       setSelectedCategoryIds([]);
@@ -199,14 +199,14 @@ const CategoryList = () => {
     for (const catId of selectedCategoryIds) {
       try {
         await axios.delete(
-          `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/category/${catId}`
+          `https://thrifstorebackend.onrender.com/api/vendor-categories/category/${catId}`
         );
       } catch (error) {
         console.error('Delete error:', error);
       }
     }
     const updatedResponse = await axios.get(
-      `https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
+      `https://thrifstorebackend.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`
     );
     setCategories(buildCategoryTree(updatedResponse.data));
     setSelectedCategoryIds([]);

@@ -431,7 +431,7 @@ const handleVendorSignUp = async (e) => {
     };
 
     // Make the API call to register vendor
-    const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/api/vendor/signup', payload);
+    const response = await axios.post('https://thrifstorebackend.onrender.com/api/vendor/signup', payload);
 
     if (response.status === 201) {
       setVendorSignupSuccess(true);
@@ -458,7 +458,7 @@ const handleVendorSignUp = async (e) => {
 // In startVerify function, remove the +1 concatenation
 const startVerify = async (phoneNumber) => {
   try {
-    const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/twilio/start-verify', {
+    const response = await axios.post('https://thrifstorebackend.onrender.com/twilio/start-verify', {
       to: phoneNumber, // Use the number as entered by user
       channel: 'sms',
     });
@@ -470,7 +470,7 @@ const startVerify = async (phoneNumber) => {
 
 const checkVerify = async (phoneNumber, code) => {
   try {
-    const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/twilio/check-verify', {
+    const response = await axios.post('https://thrifstorebackend.onrender.com/twilio/check-verify', {
       to: phoneNumber, // Remove manual +1 concatenation
       code: code.join(''),
     });
@@ -531,7 +531,7 @@ const handleLogin = async (e) => {
 //     };
 
 //     // Send request to login endpoint
-//     const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/api/vendor/login', payload);
+//     const response = await axios.post('https://thrifstorebackend.onrender.com/api/vendor/login', payload);
 
 //     // Check if login was successful
 //     if (response.status === 200) {
@@ -579,7 +579,7 @@ const handleOtpVerification = async (e) => {
       };
       console.log('payload...',payload);
       // Send request to login endpoint
-      const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/api/vendor/login', payload);
+      const response = await axios.post('https://thrifstorebackend.onrender.com/api/vendor/login', payload);
   
       // Check if login was successful
       if (response.status === 200) {

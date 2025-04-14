@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-const API_BASE_URL = 'https://thriftstorebackend-8xii.onrender.com';
+const API_BASE_URL = 'https://thrifstorebackend.onrender.com';
 
 const DetailsContainer = styled.div`
   padding: 20px;

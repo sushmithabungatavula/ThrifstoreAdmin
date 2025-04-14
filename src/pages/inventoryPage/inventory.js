@@ -19,7 +19,7 @@ const Inventory = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get(`https://thriftstorebackend-8xii.onrender.com/api/vendor/${vendorId}/items`);
+        const res = await axios.get(`https://thrifstorebackend.onrender.com/api/vendor/${vendorId}/items`);
         setItems(res.data);
       } catch (error) {
         console.error('Error fetching items:', error);

@@ -42,7 +42,7 @@ const ProductList = () => {
 
   const fetchItemsByVendor = async (vendorId) => {
     try {
-      const response = await axios.get(`https://thriftstorebackend-8xii.onrender.com/api/vendor/${vendorId}/items`);
+      const response = await axios.get(`https://thrifstorebackend.onrender.com/api/vendor/${vendorId}/items`);
       if (Array.isArray(response.data)) {
         setItems(response.data);
         setFilteredItems(response.data);
@@ -62,7 +62,7 @@ const ProductList = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`https://thriftstorebackend-8xii.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`);
+      const response = await axios.get(`https://thrifstorebackend.onrender.com/api/vendor-categories/categories/vendor/${vendorId}`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -92,7 +92,7 @@ const ProductList = () => {
 
   const handleItemDelete = async (itemId) => {
     try {
-      await axios.delete(`https://thriftstorebackend-8xii.onrender.com/api/item/deleteitem/${itemId}`);
+      await axios.delete(`https://thrifstorebackend.onrender.com/api/item/deleteitem/${itemId}`);
       const vendorId = localStorage.getItem('vendorId');
       fetchItemsByVendor(vendorId);
     } catch (error) {
@@ -103,7 +103,7 @@ const ProductList = () => {
   const handleItemSave = async () => {
     const newItem = { ...editItemData, imageURL: uploadedImages.join(',') };
     try {
-      await axios.put(`https://thriftstorebackend-8xii.onrender.com/api/item/updateitem/${editItemData.item_id}`, newItem);
+      await axios.put(`https://thrifstorebackend.onrender.com/api/item/updateitem/${editItemData.item_id}`, newItem);
       const vendorId = localStorage.getItem('vendorId');
       fetchItemsByVendor(vendorId);
       setShowEditModal(false);
@@ -115,7 +115,7 @@ const ProductList = () => {
   const handleItemAdd = async () => {
     const newItem = { ...editItemData, vendor_id: vendorId };
     try {
-      await axios.post('https://thriftstorebackend-8xii.onrender.com/api/item/additem', newItem);
+      await axios.post('https://thrifstorebackend.onrender.com/api/item/additem', newItem);
       const vendorId = localStorage.getItem('vendorId');
       fetchItemsByVendor(vendorId);
       setShowUploadContainer(false);
@@ -183,7 +183,7 @@ const uploadImages = async () => {
       const formData = new FormData();
       formData.append('image', file);
       const response = await axios.post(
-        'https://thriftstorebackend-8xii.onrender.com/upload_product_image/thriftStoreImageUpload',
+        'https://thrifstorebackend.onrender.com/upload_product_image/thriftStoreImageUpload',
         formData,
 
       );
@@ -415,7 +415,7 @@ const uploadImages = async () => {
           <ul>
             <ListItem>Name: {viewItem.name}</ListItem>
             <ListItem>Brand: {viewItem.brand}</ListItem>
-            <ListItem>Price: ₹ {viewItem.selling_price}</ListItem>
+            <ListItem>Price: $ {viewItem.selling_price}</ListItem>
             <ListItem>Description: {viewItem.description}</ListItem>
             <ListItem>Stock: {viewItem.stock_quantity}</ListItem>
           </ul>

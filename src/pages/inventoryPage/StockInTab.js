@@ -29,7 +29,7 @@ import {
 import { motion } from 'framer-motion';
 import { LoginContext } from '../../context/loginContext';
 
-const API_BASE_URL = 'https://thriftstorebackend-8xii.onrender.com/api';
+const API_BASE_URL = 'https://thrifstorebackend.onrender.com/api';
 
 export default function StockInTab({ selectedWarehouseId }) {
   const { login, vendorId } = useContext(LoginContext); 
@@ -56,7 +56,7 @@ export default function StockInTab({ selectedWarehouseId }) {
   
     const fetchItems = async () => {
       try {
-        const response = await axios.get(`https://thriftstorebackend-8xii.onrender.com/api/vendor/${vendorId}/items`);
+        const response = await axios.get(`https://thrifstorebackend.onrender.com/api/vendor/${vendorId}/items`);
         if (Array.isArray(response.data)) {
           setInventoryItems(response.data);  
         }

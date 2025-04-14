@@ -40,8 +40,8 @@ const Dashboard = () => {
         if (!vendorId) throw new Error('Vendor not authenticated');
 
         const [itemsRes, ordersRes] = await Promise.all([
-          fetch(`https://thriftstorebackend-8xii.onrender.com/api/vendor/${vendorId}/items`),
-          fetch(`https://thriftstorebackend-8xii.onrender.com/api/orders/vendor/${vendorId}`)
+          fetch(`https://thrifstorebackend.onrender.com/api/vendor/${vendorId}/items`),
+          fetch(`https://thrifstorebackend.onrender.com/api/orders/vendor/${vendorId}`)
         ]);
 
         const checkJSON = async (res) => {
@@ -209,7 +209,7 @@ const Dashboard = () => {
       <div style={mainContentStyle}>
         <div style={statsGridStyle}>
           <div style={statsCardStyle}>
-            <h3>₹{dashboardData.totalSales.toLocaleString()}</h3>
+            <h3>${dashboardData.totalSales.toLocaleString()}</h3>
             <p>Total Sales</p>
           </div>
           <div style={statsCardStyle}>
@@ -251,7 +251,7 @@ const Dashboard = () => {
                     <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>{order.date}</td>
                     <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>{order.item}</td>
                     <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>{order.quantity}</td>
-                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>₹{order.total.toFixed(2)}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>${order.total.toFixed(2)}</td>
                     <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
                       <span style={{ 
                         padding: '4px 8px', 
