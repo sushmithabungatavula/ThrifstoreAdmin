@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
@@ -387,6 +387,13 @@ const Login = () => {
   const [loginError, setLoginError] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
 
+  const [otpRequested, setOtpRequested] = useState(false);
+const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
+const [isSendingOtp, setIsSendingOtp] = useState(false);
+const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+const codeInputRefs = useRef([]);
+  const [phoneNumber, setPhoneNumber] = useState('');
+
 
   const [vendorFormData, setVendorFormData] = useState({
     name: '',
@@ -448,45 +455,148 @@ const handleVendorSignUp = async (e) => {
 
 
 
+// In startVerify function, remove the +1 concatenation
+const startVerify = async (phoneNumber) => {
+  try {
+    const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/twilio/start-verify', {
+      to: phoneNumber, // Use the number as entered by user
+      channel: 'sms',
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const checkVerify = async (phoneNumber, code) => {
+  try {
+    const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/twilio/check-verify', {
+      to: phoneNumber, // Remove manual +1 concatenation
+      code: code.join(''),
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const handleOtpChange = (text, index) => {
+  if (/^\d$/.test(text) || text === '') {
+    const newCode = [...otpCode];
+    newCode[index] = text;
+    setOtpCode(newCode);
+
+    if (text !== '' && index < 5) {
+      codeInputRefs.current[index + 1].focus();
+    } else if (text === '' && index > 0) {
+      codeInputRefs.current[index - 1].focus();
+    }
+  }
+};
+
 
 const handleLogin = async (e) => {
   e.preventDefault();
   setLoginError('');
-  setLoginLoading(true);
+  setIsSendingOtp(true);
 
   try {
-    const payload = {
-      name: loginName.trim(),  
-      email: loginEmail.trim(),  
-    };
-
-    // Send request to login endpoint
-    const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/api/vendor/login', payload);
-
-    // Check if login was successful
-    if (response.status === 200) {
-      const { token, id, name, email } = response.data;
-
-      // Store token and user info in localStorage
-      localStorage.setItem('token', token);
-      localStorage.setItem('vendorId', id);
-      localStorage.setItem('name', name);  // Save name
-      localStorage.setItem('email', email);
-
-      setIsLoggedIn(true);
-      navigate('/dashboard');
+    // Validate E.164 format
+    if (!/^\+1\d{10}$/.test(phoneNumber)) {
+      throw new Error('Invalid format. Use +1 followed by 10 digits');
     }
-  } catch (err) {
-    // Log the actual error to understand what's happening
-    console.error('Login error:', err);
 
-    if (err.response && err.response.data && err.response.data.message) {
-      setLoginError(err.response.data.message);
-    } else {
-      setLoginError('An unexpected error occurred.');
+    const verifyResponse = await startVerify(phoneNumber);
+    if (verifyResponse.success) {
+      setOtpRequested(true);
     }
+  } catch (error) {
+    setLoginError(error.response?.data?.message || error.message);
   } finally {
-    setLoginLoading(false);
+    setIsSendingOtp(false);
+  }
+};
+
+
+
+// const handleLogin = async (e) => {
+//   e.preventDefault();
+//   setLoginError('');
+//   setLoginLoading(true);
+
+//   try {
+//     const payload = {
+//       name: loginName.trim(),  
+//       email: loginEmail.trim(),  
+//     };
+
+//     // Send request to login endpoint
+//     const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/api/vendor/login', payload);
+
+//     // Check if login was successful
+//     if (response.status === 200) {
+//       const { token, id, name, email } = response.data;
+
+//       // Store token and user info in localStorage
+//       localStorage.setItem('token', token);
+//       localStorage.setItem('vendorId', id);
+//       localStorage.setItem('name', name);  // Save name
+//       localStorage.setItem('email', email);
+
+//       setIsLoggedIn(true);
+//       navigate('/dashboard');
+//     }
+//   } catch (err) {
+//     // Log the actual error to understand what's happening
+//     console.error('Login error:', err);
+
+//     if (err.response && err.response.data && err.response.data.message) {
+//       setLoginError(err.response.data.message);
+//     } else {
+//       setLoginError('An unexpected error occurred.');
+//     }
+//   } finally {
+//     setLoginLoading(false);
+//   }
+// };
+
+
+
+const handleOtpVerification = async (e) => {
+  e.preventDefault();
+  setLoginError('');
+  setIsVerifyingOtp(true);
+
+  try {
+    // Verify OTP first
+    const verifyResult = await checkVerify(phoneNumber, otpCode);
+    if (!verifyResult.success) {
+      throw new Error('Invalid OTP');
+    }
+      const payload = {
+        name: loginName.trim(),  
+        email: loginEmail.trim(),  
+      };
+      console.log('payload...',payload);
+      // Send request to login endpoint
+      const response = await axios.post('https://thriftstorebackend-8xii.onrender.com/api/vendor/login', payload);
+  
+      // Check if login was successful
+      if (response.status === 200) {
+        const { token, id, name, email } = response.data;
+        // Store token and user info in localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('vendorId', id);
+        localStorage.setItem('name', name);  // Save name
+        localStorage.setItem('email', email);
+
+        setIsLoggedIn(true);
+        navigate('/dashboard');
+      };
+} catch (error) {
+    setLoginError(error.response?.data?.message || error.message);
+  } finally {
+    setIsVerifyingOtp(false);
   }
 };
 
@@ -621,43 +731,96 @@ const handleLogin = async (e) => {
 
           {/* RIGHT SIDE (Login Card) */}
           <LoginRightSide>
-            <CardBase isSignUp={false}>
-              <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                <h2 style={{ margin: 0 }}>Login</h2>
-              </div>
+          <CardBase isSignUp={false}>
+  <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+    <h2 style={{ margin: 0 }}>Login</h2>
+  </div>
 
-              {loginError && <Error>{loginError}</Error>}
+  {loginError && <Error>{loginError}</Error>}
 
-              <form onSubmit={handleLogin}>
-                <Label htmlFor="loginName">Name</Label>
-                <Input
-                  id="loginName"
-                  type="text"
-                  value={loginName}
-                  onChange={(e) => setLoginName(e.target.value)}
-                  required
-                  placeholder="Enter your name"
-                />
+  <form onSubmit={otpRequested ? handleOtpVerification : handleLogin}>
+    {!otpRequested ? (
+      <>
+        <Label htmlFor="loginName">Name</Label>
+        <Input
+          id="loginName"
+          type="text"
+          value={loginName}
+          onChange={(e) => setLoginName(e.target.value)}
+          required
+          placeholder="Enter your name"
+        />
 
-                <Label htmlFor="loginEmail">Email</Label>
-                <Input
-                  id="loginEmail"
-                  type="text"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  required
-                  placeholder="Enter your email"
-                />
+        <Label htmlFor="loginEmail">Email</Label>
+        <Input
+          id="loginEmail"
+          type="email"
+          value={loginEmail}
+          onChange={(e) => setLoginEmail(e.target.value)}
+          required
+          placeholder="Enter your email"
+        />
 
-                <Button type="submit" disabled={loginLoading}>
-                  {loginLoading ? 'Logging In...' : 'Log In'}
-                </Button>
-              </form>
+<Label htmlFor="phoneNumber">Phone Number</Label>
+<Input
+  id="phoneNumber"
+  type="tel"
+  value={phoneNumber}
+  onChange={(e) => {
+    // Enforce E.164 format with +1 prefix
+    const val = e.target.value.replace(/[^\d]/g, '');
+    if (val.startsWith('1')) {
+      setPhoneNumber(`+${val}`);
+    } else if (val.length > 0) {
+      setPhoneNumber(`+1${val}`);
+    } else {
+      setPhoneNumber('');
+    }
+  }}
+  required
+  placeholder="+1XXXXXXXXXX"
+/>
 
-              <ToggleLink onClick={() => setShowSignUp(true)}>
-                Don’t have an account? Sign Up
-              </ToggleLink>
-            </CardBase>
+        <Button type="submit" disabled={isSendingOtp}>
+          {isSendingOtp ? 'Sending OTP...' : 'Send OTP'}
+        </Button>
+      </>
+    ) : (
+      <>
+        <div style={{ marginBottom: '20px' }}>
+          <p>Enter OTP sent to {phoneNumber}</p>
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
+            {otpCode.map((digit, index) => (
+              <Input
+                key={index}
+                type="text"
+                value={digit}
+                onChange={(e) => handleOtpChange(e.target.value, index)}
+                maxLength="1"
+                style={{ width: '40px', textAlign: 'center' }}
+                ref={(el) => (codeInputRefs.current[index] = el)}
+              />
+            ))}
+          </div>
+        </div>
+
+        <Button type="submit" disabled={isVerifyingOtp}>
+          {isVerifyingOtp ? 'Verifying...' : 'Verify OTP'}
+        </Button>
+        
+        <ToggleLink onClick={() => setOtpRequested(false)}>
+          Resend OTP
+        </ToggleLink>
+      </>
+    )}
+
+    {!otpRequested && (
+      <ToggleLink onClick={() => setShowSignUp(true)}>
+        Don’t have an account? Sign Up
+      </ToggleLink>
+    )}
+  </form>
+</CardBase>
           </LoginRightSide>
         </LoginSection>
 
