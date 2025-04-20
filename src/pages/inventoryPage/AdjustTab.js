@@ -18,7 +18,7 @@ import {
 import { AddCircleOutline, Save } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 
-const API_BASE_URL = 'https://thrifstorebackend.onrender.com/api';
+const API_BASE_URL = 'http://localhost:3000/api';
 
 const AdjustTab = () => {
   const { vendorId } = useContext(LoginContext);

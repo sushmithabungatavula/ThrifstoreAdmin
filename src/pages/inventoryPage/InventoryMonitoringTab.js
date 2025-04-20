@@ -3,7 +3,7 @@ import { LoginContext } from '../../context/loginContext';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const API_BASE_URL = 'https://thrifstorebackend.onrender.com';
+const API_BASE_URL = 'http://localhost:3000';
 
 const InventoryMonitoringTab = () => {
   const { vendorId } = useContext(LoginContext);

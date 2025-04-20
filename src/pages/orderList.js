@@ -61,13 +61,13 @@ const OrderList = () => {
     
         // First update order status to cancelled
         await axios.put(
-          `https://thrifstorebackend.onrender.com/api/orders/${order.order_id}`,
+          `http://localhost:3000/api/orders/${order.order_id}`,
           { order_status: 'cancelled' }
         );
     
         // Then call the admin approval endpoint with all required data
         const response = await axios.put(
-          `https://thrifstorebackend.onrender.com/api/orders/admin/approve`,
+          `http://localhost:3000/api/orders/admin/approve`,
           {
             order_id: order.order_id,
             return_id: order.return_id,
@@ -102,7 +102,7 @@ const OrderList = () => {
       const vendorId = localStorage.getItem('vendorId') || 'demo_vendor';
 
       const { data } = await axios.get(
-        `https://thrifstorebackend.onrender.com/api/orders/vendor/${vendorId}`
+        `http://localhost:3000/api/orders/vendor/${vendorId}`
       );
 
 
@@ -125,7 +125,7 @@ const OrderList = () => {
 
           try {
             const customerRes = await axios.get(
-              `https://thrifstorebackend.onrender.com/api/customer/${o.customer_id}`
+              `http://localhost:3000/api/customer/${o.customer_id}`
             );
             if (customerRes.data && customerRes.data.name) {
               customerName = customerRes.data.name;
@@ -137,7 +137,7 @@ const OrderList = () => {
           // Fetch item details
           try {
             const itemRes = await axios.get(
-              `https://thrifstorebackend.onrender.com/api/item/${o.item_id}`
+              `http://localhost:3000/api/item/${o.item_id}`
             );
             if (itemRes.data && itemRes.data.name) {
               itemName = itemRes.data.name;
@@ -177,7 +177,7 @@ const OrderList = () => {
       };
 
       const { data } = await axios.post(
-        `https://thrifstorebackend.onrender.com/api/orders/shipping`,
+        `http://localhost:3000/api/orders/shipping`,
         payload
       );
       console.log('Shipping created:', data);
@@ -218,13 +218,13 @@ const OrderList = () => {
         await handleCreateShipping(order);
       }
   
-      await axios.put(`https://thrifstorebackend.onrender.com/api/orders/${order.order_id}`, {
+      await axios.put(`http://localhost:3000/api/orders/${order.order_id}`, {
         order_status: order.order_status,
       });
   
       // ✅ Step 3: If status is 'delivered', trigger payment transaction API
       if (order.order_status === 'delivered') {
-        await axios.post(`https://thrifstorebackend.onrender.com/payment/record`, {
+        await axios.post(`http://localhost:3000/payment/record`, {
           order_id: order.order_id,
           item_id: order.item_id,
           vendor_id: order.vendor_id,

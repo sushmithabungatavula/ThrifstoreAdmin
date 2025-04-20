@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -6,36 +5,44 @@ import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/loginContext';
 
 const Login = () => {
-  const { setIsLoggedIn, setCartId } = useContext(LoginContext);
+  const { setIsLoggedIn } = useContext(LoginContext);
   const navigate = useNavigate();
 
-  const [isLogin, setIsLogin] = useState(true);
-  const [loginName, setLoginName] = useState('');
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginError, setLoginError] = useState('');
+  /* ---------- state ---------- */
+  const [isLogin, setIsLogin]           = useState(true);
 
-  const [signupName, setSignupName] = useState('');
-  const [signupEmail, setSignupEmail] = useState('');
-  const [signupPhone, setSignupPhone] = useState('');
-  const [signupError, setSignupError] = useState('');
+  // login
+  const [loginEmail, setLoginEmail]     = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError]     = useState('');
 
+  // signup
+  const [signupName, setSignupName]     = useState('');
+  const [signupEmail, setSignupEmail]   = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+  const [signupConfirm, setSignupConfirm]   = useState('');
+  const [signupError, setSignupError]   = useState('');
+
+  /* ---------- handlers ---------- */
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError('');
     try {
-      const response = await axios.post('https://your-backend.com/vendor/login', {
-        name: loginName,
-        email: loginEmail,
-      });
-      const { token, id, name, email } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('vendorId', id);
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
+      const { data } = await axios.post(
+        'http://localhost:3000/api/vendor/login',
+        { email: loginEmail, password: loginPassword }
+      );
+
+      const { token, vendor_id, name, email } = data;
+      localStorage.setItem('token',     token);
+      localStorage.setItem('vendorId',  vendor_id);
+      localStorage.setItem('name',      name);
+      localStorage.setItem('email',     email);
+
       setIsLoggedIn(true);
       navigate('/dashboard');
     } catch (err) {
-      setLoginError('Invalid credentials. Please try again.');
+      setLoginError(err?.response?.data?.message || 'Invalid credentials');
     }
   };
 
@@ -43,33 +50,42 @@ const Login = () => {
     e.preventDefault();
     setSignupError('');
 
+    // very basic client‑side checks
     if (!signupEmail.includes('@')) {
       setSignupError('Enter a valid email.');
       return;
     }
-    if (!/^[0-9]{10}$/.test(signupPhone)) {
-      setSignupError('Enter a valid 10-digit phone number.');
+    if (signupPassword.length < 8) {
+      setSignupError('Password must be at least 8 characters.');
+      return;
+    }
+    if (signupPassword !== signupConfirm) {
+      setSignupError('Passwords do not match.');
       return;
     }
 
     try {
-      const response = await axios.post('https://your-backend.com/vendor/signup', {
-        name: signupName,
-        email: signupEmail,
-        phone: signupPhone,
-      });
-      const { token, vendor_id, name, email } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('vendorId', vendor_id);
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
-      alert('Signup successful. Please log in.');
-      setIsLogin(true);
+      const { data } = await axios.post(
+        'http://localhost:3000/api/vendor/signup',
+        { name: signupName, email: signupEmail, password: signupPassword }
+      );
+
+      // optional: log the user in immediately
+      const { token, vendor_id, name, email } = data;
+      localStorage.setItem('token',     token);
+      localStorage.setItem('vendorId',  vendor_id);
+      localStorage.setItem('name',      name);
+      localStorage.setItem('email',     email);
+
+      alert('Signup successful. You can now log in.');
+      setIsLoggedIn(true);
+      navigate('/dashboard');
     } catch (err) {
-      setSignupError('Signup failed. Try again.');
+      setSignupError(err?.response?.data?.message || 'Signup failed.');
     }
   };
 
+  /* ---------- render ---------- */
   return (
     <PageWrapper>
       <CenteredHeading>Thrift Store Admin</CenteredHeading>
@@ -81,24 +97,73 @@ const Login = () => {
             allowFullScreen
           />
         </Left>
+
         <Right>
-          <FormTitle>{isLogin ? 'Login' : 'Sign Up'}</FormTitle>
+          <FormTitle>{isLogin ? 'Login' : 'Sign Up'}</FormTitle>
+
           {isLogin ? (
+            /* ---------- LOGIN FORM ---------- */
             <form onSubmit={handleLogin}>
-              <Input type="text" placeholder="Name" value={loginName} onChange={(e) => setLoginName(e.target.value)} required />
-              <Input type="email" placeholder="Email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} required />
+              <Input
+                type="email"
+                placeholder="Email"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                required
+              />
+              <Input
+                type="password"
+                placeholder="Password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                required
+              />
+
               {loginError && <Error>{loginError}</Error>}
+
               <Button type="submit">Login</Button>
-              <Toggle onClick={() => setIsLogin(false)}>Don’t have an account? Sign Up</Toggle>
+              <Toggle onClick={() => setIsLogin(false)}>
+                Don’t have an account? Sign Up
+              </Toggle>
             </form>
           ) : (
+            /* ---------- SIGN‑UP FORM ---------- */
             <form onSubmit={handleSignup}>
-              <Input type="text" placeholder="Name" value={signupName} onChange={(e) => setSignupName(e.target.value)} required />
-              <Input type="email" placeholder="Email" value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} required />
-              <Input type="tel" placeholder="Phone Number" value={signupPhone} onChange={(e) => setSignupPhone(e.target.value)} required />
+              <Input
+                type="text"
+                placeholder="Name"
+                value={signupName}
+                onChange={(e) => setSignupName(e.target.value)}
+                required
+              />
+              <Input
+                type="email"
+                placeholder="Email"
+                value={signupEmail}
+                onChange={(e) => setSignupEmail(e.target.value)}
+                required
+              />
+              <Input
+                type="password"
+                placeholder="Password"
+                value={signupPassword}
+                onChange={(e) => setSignupPassword(e.target.value)}
+                required
+              />
+              <Input
+                type="password"
+                placeholder="Confirm Password"
+                value={signupConfirm}
+                onChange={(e) => setSignupConfirm(e.target.value)}
+                required
+              />
+
               {signupError && <Error>{signupError}</Error>}
+
               <Button type="submit">Register</Button>
-              <Toggle onClick={() => setIsLogin(true)}>Already have an account? Login</Toggle>
+              <Toggle onClick={() => setIsLogin(true)}>
+                Already have an account? Login
+              </Toggle>
             </form>
           )}
         </Right>
@@ -109,7 +174,7 @@ const Login = () => {
 
 export default Login;
 
-// STYLED COMPONENTS
+/* ------------------------------ styled‑components ------------------------------ */
 
 const PageWrapper = styled.div`
   display: flex;

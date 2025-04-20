@@ -40,8 +40,8 @@ const Dashboard = () => {
         if (!vendorId) throw new Error('Vendor not authenticated');
 
         const [itemsRes, ordersRes] = await Promise.all([
-          fetch(`https://thrifstorebackend.onrender.com/api/vendor/${vendorId}/items`),
-          fetch(`https://thrifstorebackend.onrender.com/api/orders/vendor/${vendorId}`)
+          fetch(`http://localhost:3000/api/vendor/${vendorId}/items`),
+          fetch(`http://localhost:3000/api/orders/vendor/${vendorId}`)
         ]);
 
         const checkJSON = async (res) => {

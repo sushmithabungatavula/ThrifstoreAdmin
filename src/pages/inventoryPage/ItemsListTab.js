@@ -9,7 +9,7 @@ const ItemsListTab = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get(`https://thrifstorebackend.onrender.com/api/vendor/${vendorId}/items`);
+        const res = await axios.get(`http://localhost:3000/api/vendor/${vendorId}/items`);
         setItems(res.data);
       } catch (error) {
         console.error('Error fetching items:', error);
