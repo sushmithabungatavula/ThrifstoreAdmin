@@ -20,9 +20,7 @@ import AllCustomersPage from './pages/customers/AllCustomersPage';
 import CustomerOverviewPage from './pages/customers/CustomerOverviewPage';
 import NotificationsPage from './pages/customers/NotificationsPage';
 
-import ReferralsPage from './pages/customers/ReferralsPage';
 import AddressBillingPage from './pages/customers/AddressBillingPage';
-import ManageReviewsPage from './pages/customers/ManageReviewsPage';
 
 import StoreDetailsPage from './pages/settings/StoreDetailsPage';
 import ShippingDeliveryPage from './pages/settings/ShippingDeliveryPage';
@@ -31,8 +29,10 @@ import StoreNotificationsPage from './pages/settings/StoreNotificationsPage';
 import LocationsPage from './pages/settings/LocationsPage';
 import CheckoutPage from './pages/settings/CheckoutPage';
 
-import  InventoryPage  from './pages/inventoryPage/inventory';
+import SettingsPage from './pages/SettingsPage';
 
+import  InventoryPage  from './pages/inventoryPage/inventory';
+import EmployeeDetails from './pages/EmployeesDetails';
 
 function App() {
   // Wrap everything in LoginProvider so the context is available
@@ -151,16 +151,7 @@ function AppRoutes() {
         }
       />
       
-      <Route
-        path="/Customer/ManageReviewsPage"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <ManageReviewsPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
+      
       <Route
         path="/InventoryPage"
         element={
@@ -172,12 +163,12 @@ function AppRoutes() {
         }
       />
 
-      <Route
-        path="/Customer/ReferralsPage"
+<Route
+        path="/employeesDetails"
         element={
           <ProtectedRoute>
             <Layout>
-              <ReferralsPage />
+              <EmployeeDetails />
             </Layout>
           </ProtectedRoute>
         }
@@ -185,66 +176,17 @@ function AppRoutes() {
 
 
 <Route
-        path="/Settings/StoreDetailsPage"
+        path="/settingsPage"
         element={
           <ProtectedRoute>
             <Layout>
-              <StoreDetailsPage />
+              <SettingsPage />
             </Layout>
           </ProtectedRoute>
         }
       />
 
-<Route
-        path="/Settings/ShippingDeliveryPage"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <ShippingDeliveryPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Settings/PaymentsPage"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <PaymentsPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Settings/StoreNotificationsPage"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <StoreNotificationsPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Settings/LocationsPage"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <LocationsPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Settings/CheckoutPage"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <CheckoutPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
+
 
       {/* Fallback route */}
       <Route path="*" element={<Navigate to="/" replace />} />

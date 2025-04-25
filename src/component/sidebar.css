@@ -1,141 +1,93 @@
-/* sidebar.css */
-
-
-*, *::before, *::after {
-    box-sizing: border-box;
-  }
-
-/* Main Sidebar Styles */
+/* Base Sidebar Styles */
 .sidebar {
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    background-color: #ffffff;
-    color: #333333;
+  width: 220px;
+  background-color: #ffffff; /* White background */
+  color: #1e1e1e; /* Almost Black text */
+  height: 100vh;
+  padding: 20px 10px;
+  transition: width 0.3s ease;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+  position: relative;
+}
 
-    min-width: 60px; /* Collapsed width */
-    transition: width 0.3s ease;
-    overflow-y: auto;
-    padding: 15px;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-    border-right: 1px solid #e0e0e0;
-    position: relative;
-  }
-  
-  /* Collapsed Sidebar */
-  .sidebar.collapsed {
-    width: 60px;
-  }
-  
-  /* Toggle Button */
-  .toggle-button {
-    position: absolute;
-    top: 10px;
-    left: 100%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    background-color: #eaeaea;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    border: 1px solid #ddd;
-    transition: right 0.3s ease;
-  }
-  
-  .sidebar.collapsed .toggle-button {
-    right: -15px;
-  }
-  
-  /* Main Items */
-  .main-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    padding: 10px 12px;
-    color: #555555;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  
-  .main-item.active {
-    color: #03623f;
-    background-color: #D8F3E7;
-    border-left: 4px solid #2AB674;
-  }
-  
-  /* Sub-menu */
-  .sub-menu {
-    margin-left: 15px;
-  }
-  
-  .sub-item {
-    display: block;
-    padding: 8px 12px;
-    margin-bottom: 6px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 13px;
-    color: #666666;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  
-  .sub-item.active {
-    color: #1c604f;
-    background-color: #E4FAF0;
-    border-left: 3px solid #2AB674;
-  }
-  
-  /* Hover Effects */
-  .main-item:hover,
-  .sub-item:hover {
-    background-color: #f3f3f3;
-  }
-  
-  .sidebar.collapsed .main-item,
-  .sidebar.collapsed .sub-item {
-    justify-content: center;
-  }
-  
-  .sidebar.collapsed .main-item span,
-  .sidebar.collapsed .sub-item span {
-    display: none;
-  }
-  
+/* Collapsed Sidebar */
+.sidebar.collapsed {
+  width: 60px;
+  padding: 20px 5px;
+}
 
-  /* Custom Green Scrollbar for Sidebar */
+/* Toggle Button */
+.toggle-button {
+  position: absolute;
+  top: 15px;
+  right: -15px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc; /* Light Gray Border */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Sidebar Links */
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: #1e1e1e; /* Almost Black */
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin-bottom: 6px;
+}
+
+.sidebar a:hover {
+  background-color: #f0f0f0; /* Light hover background */
+}
+
+/* Active Link Highlight */
+.sidebar a.active,
+.sidebar a[style*="border-left: 4px solid #000000"] {
+  background-color: #f0f0f0;
+  color: #000000; /* Black text */
+  border-left: 4px solid #000000;
+}
+
+/* Collapsed Behavior */
+.sidebar.collapsed a {
+  justify-content: center;
+  padding: 10px;
+}
+
+.sidebar.collapsed a span,
+.sidebar.collapsed a .label {
+  display: none;
+}
+
+/* Custom Scrollbar */
 .sidebar::-webkit-scrollbar {
-    width: 10px;
-    background-color: #F5F5F5;
+  width: 6px;
 }
 
 .sidebar::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    background-color: #F5F5F5;
-    border-radius: 30px;
+  background-color: #ffffff;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-    border-radius: 30px;
-    background-color: #FFF;
-    background-image: -webkit-gradient(
-        linear,
-        40% 0%,
-        75% 84%,
-        from(#4D9C41),
-        to(#19911D),
-        color-stop(0.6, #54DE5D)
-    );
+  background-color: #cccccc;
+  border-radius: 10px;
 }
 
-/* Optional: For Firefox */
 .sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: #54DE5D #F5F5F5;
+  scrollbar-width: thin;
+  scrollbar-color: #cccccc #ffffff;
 }

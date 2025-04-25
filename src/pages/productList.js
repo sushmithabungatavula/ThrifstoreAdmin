@@ -428,34 +428,23 @@ const uploadImages = async () => {
 
 export default ProductList;
 
-/* ------------------ Styled Components ------------------ */
+// ----- Styled Components (move these to top or a separate file) -----
 
-const Container = styled.div`
+
+export const Container = styled.div`
   padding: 30px;
   background: #f8f9fa;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
 `;
 
-const Select = styled.select`
-  width: 100%;
-  padding: 10px 15px;
-  font-size: 1rem;
-  border: 1px solid #ced4da;
-  border-radius: 30px;
-  &:focus {
-    outline: none;
-    border-color: #80bdff;
-  }
-`;
-
-const Main = styled.main`
+export const Main = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const ContentWrapper = styled.div`
+export const ContentWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   background: #fff;
@@ -464,7 +453,7 @@ const ContentWrapper = styled.div`
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 `;
 
-const SearchInput = styled.input`
+export const SearchInput = styled.input`
   padding: 12px 15px;
   width: 100%;
   border-radius: 30px;
@@ -473,19 +462,19 @@ const SearchInput = styled.input`
   font-size: 1rem;
   &:focus {
     outline: none;
-    border-color: #80bdff;
+    border-color: #000000;
   }
 `;
 
-const FiltersContainer = styled.div`
+export const FiltersContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-bottom: 25px;
 `;
 
-const AddButton = styled.button`
-  background: linear-gradient(45deg, #007bff, #0056b3);
-  color: #fff;
+export const AddButton = styled.button`
+  background: #000000;
+  color: #ffffff;
   padding: 12px 25px;
   border: none;
   border-radius: 30px;
@@ -497,14 +486,13 @@ const AddButton = styled.button`
   }
 `;
 
-/* Table-like layout */
-const TableContainer = styled.div`
+export const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const TableHeader = styled.div`
+export const TableHeader = styled.div`
   display: flex;
   padding: 15px 20px;
   background-color: #e9ecef;
@@ -513,12 +501,12 @@ const TableHeader = styled.div`
   margin-bottom: 10px;
 `;
 
-const HeaderCell = styled.div`
+export const HeaderCell = styled.div`
   flex: 1;
   text-align: center;
 `;
 
-const ProductRow = styled.div`
+export const ProductRow = styled.div`
   display: flex;
   align-items: center;
   padding: 15px 20px;
@@ -529,29 +517,12 @@ const ProductRow = styled.div`
   }
 `;
 
-const ImageCell = styled.div`
+export const ImageCell = styled.div`
   flex: 0 0 80px;
   text-align: center;
 `;
 
-const TextCell = styled.div`
-  flex: 1;
-  text-align: center;
-  font-size: 1rem;
-`;
-
-const ActionsCell = styled.div`
-  flex: 0 0 120px;
-  text-align: center;
-`;
-
-const ButtonGroupVertical = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const ProductImg = styled.img`
+export const ProductImg = styled.img`
   width: 70px;
   height: 70px;
   object-fit: cover;
@@ -559,49 +530,42 @@ const ProductImg = styled.img`
   border: 1px solid #ced4da;
 `;
 
-/* Pagination Styling */
-const PaginateContainer = styled.div`
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
+export const TextCell = styled.div`
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
 `;
 
-const UpdatedReactPaginate = styled(ReactPaginate)`
-  li {
-    list-style: none;
-    display: inline-block;
-    margin: 0 5px;
-    a {
-      padding: 10px 15px;
-      border-radius: 5px;
-      border: 1px solid #ced4da;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      color: #495057;
-      text-decoration: none;
-    }
-    &.active a {
-      background-color: #007bff;
-      color: #fff;
-      border-color: #007bff;
-    }
-    a:hover {
-      background-color: #007bff;
-      color: #fff;
-    }
-  }
-`;
-const InputRowGroup = styled.div`
-  display: flex;
-  gap: 15px;
-  width: 100%;
-  > div {
-    flex: 1;
-  }
+export const ActionsCell = styled.div`
+  flex: 0 0 120px;
+  text-align: center;
 `;
 
-// Update the Modal styled component
-const Modal = styled.div`
+export const ButtonGroupVertical = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const ViewButton = styled.button`
+  padding: 8px 15px;
+  background: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+`;
+
+export const EditButton = styled(ViewButton)`
+  background: #333333;
+`;
+
+export const DeleteButton = styled(ViewButton)`
+  background: #dc3545;
+`;
+
+export const Modal = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -617,24 +581,33 @@ const Modal = styled.div`
   overflow-y: auto;
 `;
 
-const ModalTitle = styled.h2`
+export const ModalTitle = styled.h2`
   margin-bottom: 25px;
   text-align: center;
-  color: #343a40;
+  color: #1e1e1e;
 `;
 
-const InputRow = styled.div`
+export const InputRowGroup = styled.div`
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  > div {
+    flex: 1;
+  }
+`;
+
+export const InputRow = styled.div`
   margin-bottom: 15px;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   display: block;
   font-size: 1rem;
   margin-bottom: 8px;
   color: #495057;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   width: 100%;
   padding: 10px 15px;
   font-size: 1rem;
@@ -642,20 +615,28 @@ const Input = styled.input`
   border-radius: 30px;
   &:focus {
     outline: none;
-    border-color: #80bdff;
+    border-color: #000000;
   }
 `;
 
-const ButtonsRow = styled.div`
+export const Select = styled.select`
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 30px;
+`;
+
+export const ButtonsRow = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
   gap: 15px;
 `;
 
-const PrimaryButton = styled.button`
+export const PrimaryButton = styled.button`
   padding: 10px 25px;
-  background: linear-gradient(45deg, #28a745, #218838);
+  background: #000000;
   color: #fff;
   border: none;
   border-radius: 30px;
@@ -667,13 +648,12 @@ const PrimaryButton = styled.button`
   }
 `;
 
-/* Dropzone and Image Preview */
-const Dropzone = styled.div`
-  border: 2px dashed #007bff;
+export const Dropzone = styled.div`
+  border: 2px dashed #000000;
   padding: 30px;
   border-radius: 10px;
   text-align: center;
-  color: #495057;
+  color: #1e1e1e;
   cursor: pointer;
   margin-bottom: 15px;
   transition: background 0.3s ease;
@@ -682,13 +662,13 @@ const Dropzone = styled.div`
   }
 `;
 
-const PreviewContainer = styled.div`
+export const PreviewContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
 `;
 
-const ImagePreview = styled.div`
+export const ImagePreview = styled.div`
   position: relative;
   width: 100px;
   height: 100px;
@@ -697,13 +677,13 @@ const ImagePreview = styled.div`
   border: 1px solid #ced4da;
 `;
 
-const PreviewImg = styled.img`
+export const PreviewImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 
-const RemoveImageButton = styled.button`
+export const RemoveImageButton = styled.button`
   position: absolute;
   top: 4px;
   right: 4px;
@@ -715,57 +695,42 @@ const RemoveImageButton = styled.button`
   height: 24px;
   font-size: 0.75rem;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
-/* List Styling */
-const ListItem = styled.li`
+export const ListItem = styled.li`
   font-size: 0.95rem;
   color: #495057;
   margin-bottom: 5px;
 `;
 
-/* Action Buttons Styling */
-const ViewButton = styled.button`
-  padding: 8px 15px;
-  background: linear-gradient(45deg, #28a745, #218838);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  &:hover {
-    background: #218838;
-  }
+export const PaginateContainer = styled.div`
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
 `;
 
-const EditButton = styled.button`
-  padding: 8px 15px;
-  background: linear-gradient(45deg, #007bff, #0069d9);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  &:hover {
-    background: #0069d9;
-  }
-`;
-
-const DeleteButton = styled.button`
-  padding: 8px 15px;
-  background: linear-gradient(45deg, #dc3545, #c82333);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  &:hover {
-    background: #c82333;
+export const UpdatedReactPaginate = styled(ReactPaginate)`
+  li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 5px;
+    a {
+      padding: 10px 15px;
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #495057;
+      text-decoration: none;
+    }
+    &.active a {
+      background-color: #000000;
+      color: #fff;
+      border-color: #000000;
+    }
+    a:hover {
+      background-color: #000000;
+      color: #fff;
+    }
   }
 `;

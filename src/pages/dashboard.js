@@ -56,7 +56,6 @@ const Dashboard = () => {
         const orders = await checkJSON(ordersRes);
         const safeOrders = Array.isArray(orders) ? orders : [];
 
-        // Calculate metrics
         const totalSales = safeOrders.reduce((sum, order) => 
           sum + (order.item_price * order.item_quantity), 0
         );
@@ -70,7 +69,6 @@ const Dashboard = () => {
           order.order_date?.startsWith?.(today)
         ).length;
 
-        // Process sales data for chart
         const salesMap = safeOrders.reduce((acc, order) => {
           const date = order.order_date ? new Date(order.order_date).toLocaleDateString() : 'Unknown';
           acc[date] = (acc[date] || 0) + (order.item_price * order.item_quantity);
@@ -109,7 +107,6 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  // Chart configuration
   const chartData = {
     labels: dashboardData.salesData.map(item => item.date),
     datasets: [
@@ -117,9 +114,9 @@ const Dashboard = () => {
         label: 'Daily Sales ($)',
         data: dashboardData.salesData.map(item => item.amount),
         fill: false,
-        borderColor: '#8B26C2',
-        tension: 0.2,
-        pointBackgroundColor: '#8B26C2',
+        borderColor: '#000000',
+        tension: 0.3,
+        pointBackgroundColor: '#000000',
       },
     ],
   };
@@ -131,61 +128,28 @@ const Dashboard = () => {
       title: {
         display: true,
         text: 'Sales Overview',
-        color: '#2b292b',
-        font: { size: 16 },
+        color: '#1e1e1e',
+        font: { size: 18 }
       },
     },
     scales: {
       y: {
         beginAtZero: true,
-        ticks: { color: '#2b292b' },
+        ticks: { color: '#1e1e1e' }
       },
       x: {
-        ticks: { color: '#2b292b' },
-      },
-    },
+        ticks: { color: '#1e1e1e' }
+      }
+    }
   };
 
-  // Styles
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
-    backgroundColor: '#faf9fc',
     fontFamily: 'Arial, sans-serif',
-  };
-
-  const headerStyle = {
-    background: 'linear-gradient(45deg, #D873F5, #8B26C2)',
-    color: '#ffffff',
     padding: '20px',
-    textAlign: 'center',
-  };
-
-  const mainContentStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '20px',
-    flex: '1',
-  };
-
-  const statsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-    gap: '20px',
-    marginBottom: '20px',
-  };
-
-  const statsCardStyle = {
     backgroundColor: '#ffffff',
-    borderRadius: '10px',
-    padding: '20px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)',
-    textAlign: 'center',
-    color: '#2b292b',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+    minHeight: '100vh'
   };
 
   const sectionStyle = {
@@ -193,82 +157,81 @@ const Dashboard = () => {
     borderRadius: '10px',
     padding: '20px',
     marginBottom: '20px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)',
-    color: '#2b292b',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
   };
 
-  if (loading) return <div style={{ padding: '20px', textAlign: 'center' }}>Loading dashboard...</div>;
-  if (error) return <div style={{ padding: '20px', color: 'red' }}>Error: {error}</div>;
+  const cardStyle = {
+    backgroundColor: '#ffffff',
+    borderRadius: '10px',
+    padding: '16px',
+    textAlign: 'center',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
+    color: '#1e1e1e'
+  };
+
+  const gridStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+    gap: '20px',
+    marginBottom: '20px'
+  };
+
+  if (loading) return <div style={{ padding: '30px' }}>Loading dashboard...</div>;
+  if (error) return <div style={{ padding: '30px', color: 'red' }}>Error: {error}</div>;
 
   return (
     <div style={containerStyle}>
-      <header style={headerStyle}>
-        <h1 style={{ margin: 0, fontSize: '1.8rem' }}>Vendor Dashboard</h1>
-      </header>
+      <div style={sectionStyle}>
+        <h2 style={{ textAlign: 'center', color: '#1e1e1e' }}>Vendor Dashboard</h2>
+      </div>
 
-      <div style={mainContentStyle}>
-        <div style={statsGridStyle}>
-          <div style={statsCardStyle}>
-            <h3>${dashboardData.totalSales.toLocaleString()}</h3>
-            <p>Total Sales</p>
-          </div>
-          <div style={statsCardStyle}>
-            <h3>{dashboardData.todayOrders}</h3>
-            <p>Today's Orders</p>
-          </div>
-          <div style={statsCardStyle}>
-            <h3>{dashboardData.pendingShipments}</h3>
-            <p>Pending Shipments</p>
-          </div>
-          <div style={statsCardStyle}>
-            <h3>{dashboardData.totalProducts}</h3>
-            <p>Total Products</p>
-          </div>
-        </div>
+      <div style={gridStyle}>
+        <div style={cardStyle}><h3>${dashboardData.totalSales.toLocaleString()}</h3><p>Total Sales</p></div>
+        <div style={cardStyle}><h3>{dashboardData.todayOrders}</h3><p>Today's Orders</p></div>
+        <div style={cardStyle}><h3>{dashboardData.pendingShipments}</h3><p>Pending Shipments</p></div>
+        <div style={cardStyle}><h3>{dashboardData.totalProducts}</h3><p>Total Products</p></div>
+      </div>
 
-        <div style={sectionStyle}>
-          <Line data={chartData} options={chartOptions} />
-        </div>
+      <div style={sectionStyle}>
+        <Line data={chartData} options={chartOptions} />
+      </div>
 
-        <div style={sectionStyle}>
-          <h3>Recent Orders</h3>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr>
-                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '2px solid #eee' }}>Order ID</th>
-                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '2px solid #eee' }}>Date</th>
-                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '2px solid #eee' }}>Item</th>
-                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '2px solid #eee' }}>Quantity</th>
-                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '2px solid #eee' }}>Total</th>
-                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '2px solid #eee' }}>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {dashboardData.recentOrders.map((order) => (
-                  <tr key={order.id}>
-                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>#{order.id}</td>
-                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>{order.date}</td>
-                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>{order.item}</td>
-                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>{order.quantity}</td>
-                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>${order.total.toFixed(2)}</td>
-                    <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
-                      <span style={{ 
-                        padding: '4px 8px', 
-                        borderRadius: '4px',
-                        background: order.status === 'completed' ? '#e6f9c8' : '#f7c8f9'
-                      }}>
-                        {order.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {dashboardData.recentOrders.length === 0 && 
-            <p style={{ padding: '16px', textAlign: 'center' }}>No recent orders found</p>}
-        </div>
+      <div style={sectionStyle}>
+        <h3 style={{ marginBottom: '16px', color: '#1e1e1e' }}>Recent Orders</h3>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #cccccc' }}>Order ID</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #cccccc' }}>Date</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #cccccc' }}>Item</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #cccccc' }}>Qty</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #cccccc' }}>Total</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #cccccc' }}>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dashboardData.recentOrders.map(order => (
+              <tr key={order.id}>
+                <td style={{ padding: '10px', borderBottom: '1px solid #cccccc' }}>#{order.id}</td>
+                <td style={{ padding: '10px', borderBottom: '1px solid #cccccc' }}>{order.date}</td>
+                <td style={{ padding: '10px', borderBottom: '1px solid #cccccc' }}>{order.item}</td>
+                <td style={{ padding: '10px', borderBottom: '1px solid #cccccc' }}>{order.quantity}</td>
+                <td style={{ padding: '10px', borderBottom: '1px solid #cccccc' }}>${order.total.toFixed(2)}</td>
+                <td style={{ padding: '10px', borderBottom: '1px solid #cccccc' }}>
+                  <span style={{
+                    backgroundColor: order.status === 'completed' ? '#000000' : '#888888',
+                    color: '#ffffff',
+                    padding: '4px 10px',
+                    borderRadius: '6px'
+                  }}>
+                    {order.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {dashboardData.recentOrders.length === 0 && <p style={{ padding: '20px', textAlign: 'center' }}>No recent orders found</p>}
       </div>
     </div>
   );

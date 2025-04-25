@@ -1,0 +1,159 @@
+/* ---------- Global Tokens ---------- */
+:root {
+    --primary:      #4f46e5;
+    --primary-hov:  #4338ca;
+    --danger:       #ef4444;
+    --danger-hov:   #dc2626;
+    --neutral-50:   #f8fafc;
+    --neutral-100:  #f1f5f9;
+    --neutral-200:  #e2e8f0;
+    --neutral-300:  #cbd5e1;
+    --neutral-700:  #334155;
+    --radius-sm:    6px;
+    --radius-md:    8px;
+    --shadow-sm:    0 1px 3px rgba(0,0,0,.08);
+    --shadow-md:    0 4px 12px rgba(0,0,0,.06);
+  }
+  
+  /* ---------- Page Wrapper ---------- */
+  .employee-details-page {
+    padding: 24px;
+    background: var(--neutral-50);
+    min-height: 100vh;
+    font-family: "Inter", "Segoe UI", sans-serif;
+  }
+  
+  /* ---------- Header Bar ---------- */
+  .page-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .page-bar h2 {
+    margin: 0;
+    color: var(--neutral-700);
+    font-weight: 600;
+  }
+  
+  .add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, transform .15s ease;
+  }
+  .add-btn:hover   { background: var(--primary-hov); transform: translateY(-1px); }
+  .add-btn:active  { transform: translateY(0); }
+  
+  /* ---------- Table ---------- */
+  .employee-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .employee-table th,
+  .employee-table td {
+    padding: 12px 16px;
+    white-space: nowrap;
+  }
+  
+  .employee-table thead th {
+    background: var(--neutral-100);
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid var(--neutral-200);
+  }
+  
+  .employee-table tbody tr:nth-child(even) { background: var(--neutral-50); }
+  .employee-table tbody tr:hover           { background: var(--neutral-100); }
+  
+  /* action buttons */
+  .action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .action-btn.edit    { background: var(--primary);  color:#fff; }
+  .action-btn.edit:hover    { background: var(--primary-hov); }
+  .action-btn.delete  { background: var(--danger);   color:#fff; }
+  .action-btn.delete:hover  { background: var(--danger-hov); }
+  
+  /* ---------- Form ---------- */
+  .emp-form {
+    background: #fff;
+    padding: 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 28px;
+  }
+  
+  .emp-form h3 {
+    margin-top: 0;
+    color: var(--neutral-700);
+  }
+  
+  .emp-form .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px 24px;
+    margin-top: 12px;
+  }
+  
+  .emp-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--neutral-700);
+  }
+  
+  .emp-form input,
+  .emp-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--neutral-300);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    background: var(--neutral-50);
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .emp-form input:focus,
+  .emp-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(79,70,229,.15);
+  }
+  
+  /* form buttons */
+  .emp-form .btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    margin-top: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .emp-form .btn.save   { background: var(--primary); color:#fff; }
+  .emp-form .btn.save:hover   { background: var(--primary-hov); transform: translateY(-1px); }
+  .emp-form .btn.cancel { background: var(--danger);  color:#fff; }
+  .emp-form .btn.cancel:hover { background: var(--danger-hov);  transform: translateY(-1px); }
+  

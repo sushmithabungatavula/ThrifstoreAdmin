@@ -8,13 +8,12 @@ import TransactionsTab from './TransactionsTab';
 import StockInTab from './StockInTab';
 import StockOutTab from './StockOutTab';
 import WarehouseDetailsTab from './WarehouseDetailsTab';
-import { Tabs, Tab, Box } from '@mui/material';
+import { Tabs, Tab, Box, Paper, Typography } from '@mui/material';
 
 const Inventory = () => {
   const { vendorId } = useContext(LoginContext);
   const [value, setValue] = useState(0);
   const [items, setItems] = useState([]);
-
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -26,10 +25,7 @@ const Inventory = () => {
       }
     };
 
-
-
     fetchItems();
-
   }, [vendorId]);
 
   const handleChange = (event, newValue) => {
@@ -37,24 +33,57 @@ const Inventory = () => {
   };
 
   return (
-    <div>
-      <h2>Inventory Management</h2>
-      <Box sx={{ width: '100%' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="Inventory Management Tabs">
+    <Box sx={{ p: 4, backgroundColor: '#ffffff', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
+      <Typography
+        variant="h4"
+        sx={{
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          color: '#1e1e1e',
+          mb: 3,
+        }}
+      >
+        Inventory Management
+      </Typography>
+
+      <Paper elevation={1} sx={{ mb: 3, borderRadius: 2 }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="Inventory Tabs"
+          textColor="inherit"
+          indicatorColor="primary"
+          sx={{
+            borderBottom: '1px solid #ccc',
+            px: 2,
+            '& .MuiTab-root': {
+              fontWeight: 500,
+              textTransform: 'none',
+              fontSize: '1rem',
+              color: '#1e1e1e',
+            },
+            '& .Mui-selected': {
+              color: '#000000',
+            },
+          }}
+        >
           <Tab label="Inventory Monitoring" />
           <Tab label="Stock In" />
           <Tab label="Stock Out" />
           <Tab label="Adjust Inventory" />
           <Tab label="Transactions" />
         </Tabs>
-        {value === 0 && <InventoryMonitoringTab />}
-        {value === 1 && <StockInTab  />}
-        {value === 2 && <StockOutTab />}
-        {value === 3 && <AdjustTab />}
-        {value === 4 && <TransactionsTab />}
+      </Paper>
 
-      </Box>
-    </div>
+      {/* Tab Panels */}
+      {value === 0 && <InventoryMonitoringTab />}
+      {value === 1 && <StockInTab />}
+      {value === 2 && <StockOutTab />}
+      {value === 3 && <AdjustTab />}
+      {value === 4 && <TransactionsTab />}
+    </Box>
   );
 };
 

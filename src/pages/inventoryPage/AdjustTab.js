@@ -11,11 +11,8 @@ import {
   MenuItem,
   Snackbar,
   Alert,
-  Paper,
-  IconButton,
-  Tooltip
 } from '@mui/material';
-import { AddCircleOutline, Save } from '@mui/icons-material';
+import { Save } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 
 const API_BASE_URL = 'http://localhost:3000/api';
@@ -73,32 +70,31 @@ const AdjustTab = () => {
   };
 
   return (
-    <Box sx={{ padding: 4, backgroundColor: '#fffbf1', borderRadius: 2 }}>
+    <Box sx={{ padding: 4, backgroundColor: '#ffffff', borderRadius: 2, fontFamily: 'Inter, sans-serif', color: '#1e1e1e' }}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2>Adjust Inventory</h2>
+        <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', textTransform: 'uppercase' }}>Adjust Inventory</h2>
       </motion.div>
 
-      {/* Top Form */}
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
           gap: 2,
-          marginBottom: 4,
-          backgroundColor: '#fff',
+          marginTop: 3,
+          backgroundColor: '#f9f9f9',
           padding: 3,
           borderRadius: 2,
-          boxShadow: 1,
+          border: '1px solid #cccccc',
         }}
       >
         <FormControl fullWidth>
           <InputLabel>Category</InputLabel>
           <Select
-            value={adjustmentData.categoryId}
+            value={adjustmentData.categoryId || ''}
             onChange={(e) =>
               setAdjustmentData({ ...adjustmentData, categoryId: e.target.value })
             }
@@ -154,15 +150,20 @@ const AdjustTab = () => {
 
         <Button
           variant="contained"
-          color="primary"
           onClick={handleAdjustmentSubmit}
-          sx={{ marginTop: 2 }}
+          sx={{
+            marginTop: 2,
+            backgroundColor: '#000000',
+            color: '#ffffff',
+            '&:hover': {
+              backgroundColor: '#1e1e1e',
+            },
+          }}
         >
-          <Save /> Submit Adjustment
+          <Save sx={{ marginRight: 1 }} /> Submit Adjustment
         </Button>
       </Box>
 
-      {/* Snackbar Notifications */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}

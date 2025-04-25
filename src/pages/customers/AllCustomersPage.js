@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AllCustomersPage.css';
-import { FaSearch, FaChevronDown, FaChevronUp, FaLeaf } from 'react-icons/fa';
+import { FaSearch, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import axios from 'axios';
 
 function AllCustomersPage() {
   const navigate = useNavigate();
-
   const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All'); // All / Active / Inactive
+  const [statusFilter, setStatusFilter] = useState('All');
   const [dateFilterOpen, setDateFilterOpen] = useState(false);
   const [sortOption, setSortOption] = useState('Most Orders');
 
-  // Fetch customers from the API
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -23,7 +21,6 @@ function AllCustomersPage() {
         console.error('Error fetching customers:', error);
       }
     };
-
     fetchCustomers();
   }, []);
 
@@ -32,15 +29,8 @@ function AllCustomersPage() {
   };
 
   const handleSearchChange = (e) => setSearchTerm(e.target.value);
-
-  const handleStatusFilter = (status) => {
-    setStatusFilter(status);
-  };
-
-  const handleSortOptionChange = (e) => {
-    setSortOption(e.target.value);
-  };
-
+  const handleStatusFilter = (status) => setStatusFilter(status);
+  const handleSortOptionChange = (e) => setSortOption(e.target.value);
   const toggleDateFilter = () => setDateFilterOpen((prev) => !prev);
 
   const filteredCustomers = customers.filter((c) => {
@@ -49,14 +39,13 @@ function AllCustomersPage() {
       c.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
       statusFilter === 'All' ? true : c.status === statusFilter;
-
     return matchesSearch && matchesStatus;
   });
 
   return (
     <div className="all-customers-page">
       <div className="header-section">
-        <h1>All Customers</h1>
+        <h1>ALL CUSTOMERS</h1>
         <p className="subtitle">
           Manage your eco-conscious buyers, see purchase history, and track loyalty.
         </p>
@@ -74,24 +63,15 @@ function AllCustomersPage() {
         </div>
 
         <div className="status-filters">
-          <button
-            onClick={() => handleStatusFilter('All')}
-            className={statusFilter === 'All' ? 'active' : ''}
-          >
-            All
-          </button>
-          <button
-            onClick={() => handleStatusFilter('Active')}
-            className={statusFilter === 'Active' ? 'active' : ''}
-          >
-            Active
-          </button>
-          <button
-            onClick={() => handleStatusFilter('Inactive')}
-            className={statusFilter === 'Inactive' ? 'active' : ''}
-          >
-            Inactive
-          </button>
+          {['All', 'Active', 'Inactive'].map((status) => (
+            <button
+              key={status}
+              onClick={() => handleStatusFilter(status)}
+              className={statusFilter === status ? 'active' : ''}
+            >
+              {status}
+            </button>
+          ))}
         </div>
 
         <div className="date-filter">
@@ -112,13 +92,7 @@ function AllCustomersPage() {
           )}
         </div>
 
-        <div className="sort-dropdown">
-          <select value={sortOption} onChange={handleSortOptionChange}>
-            <option value="Most Orders">Most Orders</option>
-            <option value="Total Spent">Total Spent</option>
-            <option value="Frequent Returns">Frequent Returns</option>
-          </select>
-        </div>
+       
       </div>
 
       <div className="customers-table-wrapper">
@@ -128,7 +102,7 @@ function AllCustomersPage() {
               <th>Name / Email</th>
               <th>Phone</th>
               <th>Location</th>
-              <th>Total Spent</th>
+              <th>Date Joined</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -144,19 +118,11 @@ function AllCustomersPage() {
                     <span className="customer-name">{customer.name}</span>
                     <span className="customer-email">{customer.email}</span>
                   </div>
-                  {/* <div className="eco-badge">
-                    <FaLeaf />
-                    <span>{customer.ecoScore}</span>
-                  </div> */}
                 </td>
                 <td>{customer.phone}</td>
                 <td>{customer.address}</td>
                 <td>{customer.registration_date}</td>
-                <td
-                  className={
-                    customer.status === 'Active' ? 'status-active' : 'status-inactive'
-                  }
-                >
+                <td className={customer.status === 'Active' ? 'status-active' : 'status-inactive'}>
                   {customer.status}
                 </td>
               </tr>

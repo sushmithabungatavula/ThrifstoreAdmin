@@ -1,227 +1,154 @@
 .all-customers-page {
-    padding: 20px;
-    color: #333;
-    font-family: 'Inter', sans-serif;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .header-section {
-    margin-bottom: 16px;
-  }
-  
-  .header-section h1 {
-    font-size: 1.8rem;
-    color: #03623f; /* Deep green for eco theme */
-    margin-bottom: 4px;
-  }
-  
-  .subtitle {
-    font-size: 0.95rem;
-    color: #555;
-    margin-bottom: 0.5rem;
-  }
-  
-  .filters-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  
-  .search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-icon {
-    position: absolute;
-    left: 8px;
-    color: #888;
-  }
-  
-  .search-bar input {
-    padding: 8px 8px 8px 28px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    outline: none;
-    font-size: 0.9rem;
-    width: 200px;
-  }
-  
-  .status-filters button {
-    background-color: #f8f8f8;
-    border: 1px solid #ccc;
-    color: #555;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: background-color 0.2s;
-  }
-  
-  .status-filters button:hover {
-    background-color: #e8e8e8;
-  }
-  
-  .status-filters button.active {
-    background-color: #2AB674;
-    border-color: #2AB674;
-    color: #fff;
-  }
-  
-  .date-filter {
-    position: relative;
-  }
-  
-  .date-filter-toggle {
-    background-color: #f8f8f8;
-    border: 1px solid #ccc;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #555;
-  }
-  
-  .date-filter-toggle:hover {
-    background-color: #e8e8e8;
-  }
-  
-  .date-range-selector {
-    position: absolute;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 10px;
-    top: 40px;
-    width: 200px;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .date-range-selector label {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.85rem;
-    color: #444;
-  }
-  
-  .date-range-selector input {
-    margin-top: 4px;
-    padding: 4px;
-    font-size: 0.85rem;
-  }
-  
-  .sort-dropdown select {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    color: #555;
-    background-color: #fff;
-    outline: none;
-  }
-  
-  .customers-table-wrapper {
-    overflow-x: auto;
-  }
-  
-  .customers-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 700px;
-  }
-  
-  .customers-table th,
-  .customers-table td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 0.9rem;
-  }
-  
-  .customers-table th {
-    background-color: #f3f3f3;
-    font-weight: 600;
-    color: #444;
-  }
-  
-  .customer-row {
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .customer-row:hover {
-    background-color: #fafafa;
-  }
-  
-  .name-email {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .customer-name {
-    font-weight: 600;
-    color: #03623f;
-  }
-  
-  .customer-email {
-    font-size: 0.85rem;
-    color: #666;
-  }
-  
-  .eco-badge {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 4px;
-    font-size: 0.75rem;
-    color: #2AB674;
-    background: #DFF5EC; /* Light greenish background */
-    border-radius: 4px;
-    padding: 2px 6px;
-    width: fit-content;
-  }
-  
-  .status-active {
-    color: #2AB674;
-    font-weight: 600;
-  }
-  
-  .status-inactive {
-    color: #999;
-    font-weight: 500;
-  }
-  
-  .pagination {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 16px;
-    gap: 4px;
-  }
-  
-  .pagination button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    color: #555;
-    border-radius: 6px;
-    padding: 4px 8px;
-    cursor: pointer;
-  }
-  
-  .pagination button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-  
-  .pagination span {
-    font-size: 0.85rem;
-    color: #444;
-  }
-  
+  padding: 20px;
+  background: #ffffff;
+  color: #1e1e1e;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header-section h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: #1e1e1e;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #888888;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #888888;
+}
+
+.search-bar input {
+  padding: 8px 8px 8px 30px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  width: 200px;
+  color: #1e1e1e;
+  background: #ffffff;
+}
+
+.status-filters button {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  color: #1e1e1e;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.status-filters button.active {
+  background: #000000;
+  border-color: #000000;
+  color: #ffffff;
+}
+
+.date-filter-toggle,
+.sort-dropdown select {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  color: #1e1e1e;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.date-range-selector {
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.date-range-selector label {
+  font-size: 0.85rem;
+  color: #1e1e1e;
+}
+
+.customers-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.customers-table th,
+.customers-table td {
+  text-align: left;
+  padding: 12px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #cccccc;
+}
+
+.customers-table th {
+  background-color: #f5f5f5;
+  color: #1e1e1e;
+  font-weight: bold;
+}
+
+.customer-row:hover {
+  background-color: #f0f0f0;
+}
+
+.customer-name {
+  font-weight: 600;
+}
+
+.customer-email {
+  font-size: 0.85rem;
+  color: #888888;
+}
+
+.status-active {
+  color: #000000;
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: #888888;
+  font-weight: 500;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #1e1e1e;
+  font-size: 0.9rem;
+}

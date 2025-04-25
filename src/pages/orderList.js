@@ -100,67 +100,85 @@ const OrderList = () => {
   const fetchOrders = async () => {
     try {
       const vendorId = localStorage.getItem('vendorId') || 'demo_vendor';
-
       const { data } = await axios.get(
         `http://localhost:3000/api/orders/vendor/${vendorId}`
       );
-
-
+  
       const ordersWithDetails = await Promise.all(
         data.map(async (o) => {
           let lat = null;
           let lng = null;
           let customerName = 'Unknown Customer';
           let itemName = `Item ${o.item_id}`;
-
+  
+          // — parse shipping_address for coords
           if (o.shipping_address && o.shipping_address !== 'null') {
             try {
               const shippingObj = JSON.parse(o.shipping_address);
               lat = parseFloat(shippingObj.latitude) || null;
               lng = parseFloat(shippingObj.longitude) || null;
-            } catch (error) {
-              console.error('Error parsing shipping_address:', error);
+            } catch (err) {
+              console.error('Error parsing shipping_address:', err);
             }
           }
-
+  
+          // — fetch customer name
           try {
             const customerRes = await axios.get(
               `http://localhost:3000/api/customer/${o.customer_id}`
             );
-            if (customerRes.data && customerRes.data.name) {
+            if (customerRes.data?.name) {
               customerName = customerRes.data.name;
             }
-          } catch (error) {
-            console.error('Error fetching customer details:', error);
+          } catch (err) {
+            console.error('Error fetching customer details:', err);
           }
-
-          // Fetch item details
+  
+          // — fetch item name
           try {
             const itemRes = await axios.get(
               `http://localhost:3000/api/item/${o.item_id}`
             );
-            if (itemRes.data && itemRes.data.name) {
+            if (itemRes.data?.name) {
               itemName = itemRes.data.name;
             }
-          } catch (error) {
-            console.error('Error fetching item details:', error);
+          } catch (err) {
+            console.error('Error fetching item details:', err);
           }
-
+  
+          // — NEW: for cancelled orders, grab matching return_id
+          let return_id = null;
+          if (['approve_cancel', 'cancelled'].includes(o.order_status)) {
+            try {
+              const retRes = await axios.get(
+                `http://localhost:3000/api/orders/returns/${o.customer_id}`
+              );
+              if (Array.isArray(retRes.data)) {
+                const match = retRes.data.find(rr => rr.order_id === o.order_id);
+                if (match) return_id = match.return_id;
+              }
+            } catch (err) {
+              console.error('Error fetching return requests:', err);
+            }
+          }
+  
           return {
             ...o,
             lat,
             lng,
             customerName,
             itemName,
+            return_id,    // ◄ now available on each order object
           };
         })
       );
-
+  
       setOrders(ordersWithDetails);
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
   };
+  
 
   // ---------------------- Shipping Creation ----------------------
  
@@ -389,16 +407,12 @@ const OrderList = () => {
                     <button
                       style={{
                         ...styles.updateButton,
-                        // If status is 'placed', button is disabled & grey
-                        backgroundColor:
-                          order.order_status === 'placed'
-                            ? '#d3d3d3'
-                            : '#8ce08a',
-                        cursor:
-                          order.order_status === 'placed'
-                            ? 'not-allowed'
-                            : 'pointer',
+                        backgroundColor: order.order_status === 'placed' ? '#d3d3d3' : '#000000',
+                        color: '#ffffff',
+                        border: '1px solid #000000',
+                        cursor: order.order_status === 'placed' ? 'not-allowed' : 'pointer',
                       }}
+                      
                       disabled={order.order_status === 'placed'}
                       onClick={(e) => {
                         e.stopPropagation(); // prevent row-click
@@ -546,115 +560,141 @@ const OrderList = () => {
 // ---------------------- Inline Styles ----------------------
 const styles = {
   pageContainer: {
+    backgroundColor: '#ffffff',
+    color: '#1e1e1e',
     fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#f9f9fc',
-    minHeight: '100vh',
     padding: '20px',
-  },
-
-  tableTitle: {
-    fontSize: '1.4rem',
-    marginBottom: '15px',
-    color: '#2c3e50',
-  },
-  approveButton: {
-    padding: '6px 12px',
-    border: 'none',
-    borderRadius: '4px',
-    backgroundColor: '#ff6b6b',
-    color: 'white',
-    cursor: 'pointer',
-    fontWeight: 'bold',
+    minHeight: '100vh',
   },
 
   title: {
-    fontSize: '1.8rem',
-    marginBottom: '20px',
+    fontSize: '24px',
+    fontWeight: 'bold',
+    color: '#1e1e1e',
+    marginBottom: '24px',
+    textTransform: 'uppercase',
   },
+
+  tableTitle: {
+    fontSize: '18px',
+    fontWeight: '600',
+    color: '#1e1e1e',
+    marginBottom: '16px',
+  },
+
   content: {
     display: 'flex',
-    gap: '20px',
+    flexDirection: 'column',
+    gap: '30px',
   },
+
   tableContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: '8px',
+    backgroundColor: '#ffffff',
+    borderRadius: '12px',
     padding: '20px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
     overflowX: 'auto',
-    marginBottom: '10px',
   },
+
   table: {
     width: '100%',
     borderCollapse: 'collapse',
   },
+
   th: {
     textAlign: 'left',
-    borderBottom: '2px solid #ddd',
-    paddingBottom: '10px',
-    color: '#333',
+    padding: '10px',
+    backgroundColor: '#f0f0f0',
+    borderBottom: '1px solid #cccccc',
+    color: '#1e1e1e',
+    fontWeight: '600',
   },
-  tr: {
-    borderBottom: '1px solid #eee',
-    cursor: 'pointer',
-  },
+
   td: {
-    padding: '8px',
-    fontSize: '0.95rem',
-    color: '#555',
-    verticalAlign: 'middle',
+    padding: '10px',
+    borderBottom: '1px solid #cccccc',
+    color: '#1e1e1e',
+    fontSize: '14px',
   },
+
   tdClickable: {
-    padding: '8px',
-    fontSize: '0.95rem',
-    color: '#007bff',
+    padding: '10px',
+    fontSize: '14px',
+    color: '#000000',
     textDecoration: 'underline',
+    cursor: 'pointer',
     verticalAlign: 'middle',
   },
+
+  tr: {
+    transition: 'background-color 0.2s ease',
+  },
+
   select: {
-    padding: '4px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    outline: 'none',
+    padding: '6px 10px',
+    borderRadius: '6px',
+    border: '1px solid #cccccc',
+    color: '#1e1e1e',
+    fontSize: '14px',
+    backgroundColor: '#ffffff',
   },
-  updateButton: {
-    padding: '6px 12px',
-    border: 'none',
-    borderRadius: '4px',
-    backgroundColor: '#8ce08a',
+
+  approveButton: {
+    backgroundColor: '#000000',
+    color: '#ffff',
+    border: '1px solid #000000',
+    borderRadius: '6px',
+    padding: '6px 14px',
     cursor: 'pointer',
-    fontWeight: 'bold',
+    fontSize: '14px',
   },
+
+  updateButton: {
+    backgroundColor: '#000000',
+    color: '#1e1e1e',
+    border: '1px solid #000000',
+    borderRadius: '6px',
+    padding: '6px 14px',
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+  },
+
+  locateButton: {
+    backgroundColor: '#000000',
+    color: '#ffff',
+    border: '1px solid #000000',
+    borderRadius: '30px',
+    padding: '10px 20px',
+    fontWeight: '500',
+    marginTop: '12px',
+    cursor: 'pointer',
+  },
+
   mapSection: {
-    width: '800px',
-    height: '30vh',
-    display: 'flex',
-    flexDirection: 'column',
+    width: '100%',
+    maxWidth: '900px',
+    marginBottom: '30px',
   },
+
   mapTitle: {
-    margin: 0,
-    fontSize: '1.2rem',
-    marginBottom: '8px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+    color: '#1e1e1e',
   },
+
   mapContainer: {
     height: '300px',
-    borderRadius: '8px',
+    width: '100%',
+    borderRadius: '10px',
     overflow: 'hidden',
-    position: 'relative',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.05)',
   },
+
   mapInner: {
     height: '100%',
     width: '100%',
-  },
-  locateButton: {
-    marginTop: '10px',
-    padding: '8px 16px',
-    backgroundColor: '#8ce08a',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
   },
 };
 
